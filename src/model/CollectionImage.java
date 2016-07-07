@@ -13,7 +13,7 @@ public class CollectionImage {
 	
 	public CollectionImage(String fileLocation) {
 		imageCollection = new ArrayList<Image>();
-		fileDirectory = new File("fileLocation");
+		fileDirectory = new File(fileLocation);
 	}
 	
 	//inspired by http://stackoverflow.com/questions/11300847/load-and-display-all-the-images-from-a-folder
