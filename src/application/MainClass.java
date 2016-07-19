@@ -1,13 +1,17 @@
 package application;
 
+import controller.ControllerMenu;
 import model.CollectionImage;
+import presenter.PresenterMenu;
+import view.ViewMenu;
 
 public class MainClass {
 	public static void main(String[] args) {
-		CollectionImage c = new CollectionImage("C:\\Users\\Sam\\Desktop\\LOG121\\Lab4\\Images");
+		ViewMenu viewMenu = new ViewMenu();
+        PresenterMenu modelMenu = new PresenterMenu();
+        new ControllerMenu(viewMenu, modelMenu);
 		
-		
-		
-		c.loadFile();
+		//CollectionImage c = new CollectionImage("C:\\Users\\Sam\\Desktop\\LOG121\\Lab4\\Images");
+		//c.loadFile();
 	}
 }
