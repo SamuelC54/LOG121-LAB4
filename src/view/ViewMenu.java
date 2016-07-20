@@ -18,6 +18,7 @@ public class ViewMenu extends JFrame{
 	//Attributes
 	private JPanel panneauPrincipal;
 	protected JButton bLoadFile;
+	protected JButton bOpenImage;
 	private JList<String> ListImages;
 	private DefaultListModel<String> listModel;
 	private JScrollPane scrollPane;
@@ -27,22 +28,23 @@ public class ViewMenu extends JFrame{
 		panneauPrincipal = (JPanel)this.getContentPane();
 		
 		listModel = new DefaultListModel<String>();
-		listModel.addElement("Jane Doe");
-		listModel.addElement("John Smith");
-		listModel.addElement("Kathy Green");
 		ListImages = new JList<String>(listModel);
 		scrollPane = new JScrollPane(ListImages);
-		bLoadFile = new JButton("Load File");
+		bLoadFile = new JButton();
+		bOpenImage = new JButton();
 		
 		panneauPrincipal.setLayout(new BoxLayout(panneauPrincipal, BoxLayout.Y_AXIS));
 		
 		bLoadFile.setAlignmentX(CENTER_ALIGNMENT);
 		scrollPane.setAlignmentX(CENTER_ALIGNMENT);
+		bOpenImage.setAlignmentX(CENTER_ALIGNMENT);
 		
 		panneauPrincipal.add(Box.createRigidArea(new Dimension(0,20)));
 		panneauPrincipal.add(scrollPane);
 		panneauPrincipal.add(Box.createRigidArea(new Dimension(0,10)));
 		panneauPrincipal.add(bLoadFile);
+		panneauPrincipal.add(Box.createRigidArea(new Dimension(0,10)));
+		panneauPrincipal.add(bOpenImage);
 		panneauPrincipal.add(Box.createRigidArea(new Dimension(0,10)));
 		
 		this.setSize(new Dimension(400,600));
@@ -52,8 +54,14 @@ public class ViewMenu extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 	}
-	
+	//getter/setter
 	public JButton getbLoadFile() {
 		return bLoadFile;
+	}
+	public JButton getbOpenImage() {
+		return bOpenImage;
+	}
+	public DefaultListModel<String> getListModel(){
+		return this.listModel;
 	}
 }
