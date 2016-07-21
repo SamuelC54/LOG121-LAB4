@@ -2,6 +2,7 @@
 
 package viewInterface;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -9,6 +10,7 @@ import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 
 import model.CollectionImage;
 import presenter.PresenterMenu;
@@ -37,7 +39,7 @@ public class ViewInterfaceMenu implements PropertyChangeListener{
         
         view.getbOpenImage().setAction(new AbstractAction("Open Image") { 
             public void actionPerformed(ActionEvent arg0) {
-            	presenter.showImageView(view.getSelectedListString());
+            	presenter.showImageView(view.getSelectedListIndex());
             }
         });
         //...
@@ -48,11 +50,14 @@ public class ViewInterfaceMenu implements PropertyChangeListener{
 
         if("loadFile".equalsIgnoreCase(propName)){
         	CollectionImage c = CollectionImage.getInstance();
-        	DefaultListModel<String> listModel = view.getListModel();
+        	DefaultListModel<ImageIcon> listModel = view.getListModel();
         	listModel.clear();
         	
         	for(File f : c.getFileList()){
-        		listModel.addElement(f.getName());
+        		ImageIcon imageIcon = new ImageIcon(f.getAbsolutePath());
+        		imageIcon.setImage(imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+        		
+        		listModel.addElement(imageIcon);
         	}   
         }
         

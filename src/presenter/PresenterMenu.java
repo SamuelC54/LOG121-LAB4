@@ -2,6 +2,7 @@
 
 package presenter;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -42,17 +43,8 @@ public class PresenterMenu{
         
         propChangeFirer.firePropertyChange("loadFile", 0, 1); //0,1 for simulating change
 	}
-	public void showImageView(String fileName){
-		int indexImage = -1;
-		
-		for(int i=0;i<collectionImage.getFileList().size();i++){
-			File f = collectionImage.getFileList().get(i);
-			if(f.getName().equals(fileName)){
-				indexImage = i;
-			}
-    	}
-		
-		BufferedImage img = collectionImage.getImageList().get(indexImage);
+	public void showImageView(int index){
+		BufferedImage img = collectionImage.getImageList().get(index);
 		
 		ViewImage viewImage = new ViewImage();
         PresenterImage presenterImage = new PresenterImage(img);

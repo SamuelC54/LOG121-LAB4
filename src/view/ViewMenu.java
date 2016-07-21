@@ -3,10 +3,12 @@
 package view;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -19,16 +21,16 @@ public class ViewMenu extends JFrame{
 	private JPanel panneauPrincipal;
 	private JButton bLoadFile;
 	private JButton bOpenImage;
-	private JList<String> ListImages;
-	private DefaultListModel<String> listModel;
+	private JList<ImageIcon> ListImages;
+	private DefaultListModel<ImageIcon> listModel;
 	private JScrollPane scrollPane;
 	//Method
 	public ViewMenu() {
 		Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
 		panneauPrincipal = (JPanel)this.getContentPane();
 		
-		listModel = new DefaultListModel<String>();
-		ListImages = new JList<String>(listModel);
+		listModel = new DefaultListModel<ImageIcon>();
+		ListImages = new JList<ImageIcon>(listModel);
 		scrollPane = new JScrollPane(ListImages);
 		bLoadFile = new JButton();
 		bOpenImage = new JButton();
@@ -61,10 +63,10 @@ public class ViewMenu extends JFrame{
 	public JButton getbOpenImage() {
 		return bOpenImage;
 	}
-	public DefaultListModel<String> getListModel(){
+	public DefaultListModel<ImageIcon> getListModel(){
 		return this.listModel;
 	}
-	public String getSelectedListString(){
-		return ListImages.getSelectedValue();
+	public int getSelectedListIndex(){
+		return ListImages.getSelectedIndex();
 	}
 }

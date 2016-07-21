@@ -39,7 +39,7 @@ public class ViewImage extends JFrame{
 		panneauPrincipal.add(Box.createRigidArea(new Dimension(0,10)));
 		
 		this.setSize(new Dimension(400,600));
-		this.setLocation(screenDimension.width/2-this.getSize().width/2, screenDimension.height/2-this.getSize().height/2);
+		this.setLocation(screenDimension.width/10-this.getSize().width/2, screenDimension.height/2-this.getSize().height/2);
         setResizable(false);
         setTitle("View Image");
         setVisible(true);
