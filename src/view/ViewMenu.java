@@ -17,8 +17,8 @@ public class ViewMenu extends JFrame{
 	//Constants
 	//Attributes
 	private JPanel panneauPrincipal;
-	protected JButton bLoadFile;
-	protected JButton bOpenImage;
+	private JButton bLoadFile;
+	private JButton bOpenImage;
 	private JList<String> ListImages;
 	private DefaultListModel<String> listModel;
 	private JScrollPane scrollPane;
@@ -63,5 +63,8 @@ public class ViewMenu extends JFrame{
 	}
 	public DefaultListModel<String> getListModel(){
 		return this.listModel;
+	}
+	public String getSelectedListString(){
+		return ListImages.getSelectedValue();
 	}
 }

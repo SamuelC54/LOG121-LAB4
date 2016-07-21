@@ -2,24 +2,31 @@
 
 package presenter;
 
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.event.SwingPropertyChangeSupport;
 
 import model.CollectionImage;
+import view.ViewImage;
+import view.ViewMenu;
+import viewInterface.ViewInterfaceImage;
+import viewInterface.ViewInterfaceMenu;
 
 public class PresenterMenu{
 	//Attributes
 	private SwingPropertyChangeSupport propChangeFirer;
 	private CollectionImage collectionImage = CollectionImage.getInstance();
 	//Methods
+	//presenter methods
 	public PresenterMenu() {
         propChangeFirer = new SwingPropertyChangeSupport(this);
     }
 	public void addListener(PropertyChangeListener prop) {
         propChangeFirer.addPropertyChangeListener(prop);
     }
+	//
 	public void loadCollectionImage(){
 		File selectedFile = null;
 		JFileChooser fileChooser = new JFileChooser("C:\\Users\\Sam\\Desktop\\LOG121\\Lab4");
@@ -35,14 +42,30 @@ public class PresenterMenu{
         
         propChangeFirer.firePropertyChange("loadFile", 0, 1); //0,1 for simulating change
 	}
+	public void showImageView(String fileName){
+		int indexImage = -1;
+		
+		for(int i=0;i<collectionImage.getFileList().size();i++){
+			File f = collectionImage.getFileList().get(i);
+			if(f.getName().equals(fileName)){
+				indexImage = i;
+			}
+    	}
+		
+		BufferedImage img = collectionImage.getImageList().get(indexImage);
+		
+		ViewImage viewImage = new ViewImage();
+        PresenterImage presenterImage = new PresenterImage(img);
+        new ViewInterfaceImage(viewImage, presenterImage);
+	}
 	
 	/**
 	public void setAddress(String address){
         String oldVal = this.variableX;
         this.variableX = address;
 
-        //after executing this, the controller will be notified that the new address has been set. Its then the controller's
-        //task to decide what to do when the address in the model has changed. Ideally, the controller will update the view about this
+        //after executing this, the viewInterface will be notified that the new address has been set. Its then the viewInterface
+        //task to decide what to do when the address in the model has changed. Ideally, the viewInterface will update the view about this
         propChangeFirer.firePropertyChange("variableX", oldVal, address);
     }
     **/

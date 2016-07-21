@@ -58,4 +58,7 @@ public class CollectionImage {
 	public ArrayList<File> getFileList(){
 		return fileList;
 	}
+	public ArrayList<BufferedImage> getImageList(){
+		return imageList;
+	}
 }

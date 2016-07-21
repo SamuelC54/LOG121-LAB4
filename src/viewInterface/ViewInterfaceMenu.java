@@ -29,7 +29,7 @@ public class ViewInterfaceMenu implements PropertyChangeListener{
         setUpViewInteraction();
     }
     private void setUpViewInteraction(){
-        view.getbLoadFile().setAction(new AbstractAction("Load") { 
+        view.getbLoadFile().setAction(new AbstractAction("Choose Folder") { 
             public void actionPerformed(ActionEvent arg0) {
                 presenter.loadCollectionImage();
             }
@@ -37,7 +37,7 @@ public class ViewInterfaceMenu implements PropertyChangeListener{
         
         view.getbOpenImage().setAction(new AbstractAction("Open Image") { 
             public void actionPerformed(ActionEvent arg0) {
-                System.out.println("Open Image");
+            	presenter.showImageView(view.getSelectedListString());
             }
         });
         //...
@@ -53,7 +53,7 @@ public class ViewInterfaceMenu implements PropertyChangeListener{
         	
         	for(File f : c.getFileList()){
         		listModel.addElement(f.getName());
-           }   
+        	}   
         }
         
         /**
