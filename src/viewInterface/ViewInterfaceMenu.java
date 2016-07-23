@@ -13,6 +13,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 
 import model.CollectionImage;
+import model.ImageData;
 import presenter.PresenterMenu;
 import view.ViewMenu;
 
@@ -39,7 +40,7 @@ public class ViewInterfaceMenu implements PropertyChangeListener{
         
         view.getbOpenImage().setAction(new AbstractAction("Open Image") { 
             public void actionPerformed(ActionEvent arg0) {
-            	presenter.showImageView(view.getSelectedListIndex());
+            	presenter.generateImagePerspectiveMVP(view.getSelectedListIndex());
             }
         });
         //...
@@ -53,11 +54,8 @@ public class ViewInterfaceMenu implements PropertyChangeListener{
         	DefaultListModel<ImageIcon> listModel = view.getListModel();
         	listModel.clear();
         	
-        	for(File f : c.getFileList()){
-        		ImageIcon imageIcon = new ImageIcon(f.getAbsolutePath());
-        		imageIcon.setImage(imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-        		
-        		listModel.addElement(imageIcon);
+        	for(ImageData imgdata : c.getImageList()){
+        		listModel.addElement(imgdata.getImageIcon());
         	}   
         }
         

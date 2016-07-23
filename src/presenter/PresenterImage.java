@@ -2,16 +2,17 @@
 
 package presenter;
 
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import javax.swing.event.SwingPropertyChangeSupport;
+
+import model.ImageData;
 
 public class PresenterImage{
 	//Attributes
 	private SwingPropertyChangeSupport propChangeFirer;
-	private BufferedImage image;
+	private ImageData image;
 	//Methods
-	public PresenterImage(BufferedImage image) {
+	public PresenterImage(ImageData image) {
 		this.image = image;
         propChangeFirer = new SwingPropertyChangeSupport(this);
     }
@@ -24,5 +25,4 @@ public class PresenterImage{
         //task to decide what to do when the address in the model has changed. Ideally, the viewInterface will update the view about this
         propChangeFirer.firePropertyChange("setImage", -1, image);
     }
-    
 }

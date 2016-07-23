@@ -12,7 +12,7 @@ public class CollectionImage {
 	//Attributes
 	private static CollectionImage instance = null;
 	private File fileDirectory;
-	private ArrayList<BufferedImage> imageList = new ArrayList<BufferedImage>();
+	private ArrayList<ImageData> imageList = new ArrayList<ImageData>();
 	private ArrayList<File> fileList = new ArrayList<File>();
 	//Method
 	//singleton
@@ -37,7 +37,7 @@ public class CollectionImage {
 
             try {
                 img = ImageIO.read(f);
-                imageList.add(img);
+                imageList.add(new ImageData(img));
                 fileList.add(f);
                 // you probably want something more involved here
                 // to display in your UI
@@ -58,7 +58,7 @@ public class CollectionImage {
 	public ArrayList<File> getFileList(){
 		return fileList;
 	}
-	public ArrayList<BufferedImage> getImageList(){
+	public ArrayList<ImageData> getImageList(){
 		return imageList;
 	}
 }

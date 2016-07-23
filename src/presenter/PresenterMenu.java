@@ -2,18 +2,15 @@
 
 package presenter;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.event.SwingPropertyChangeSupport;
 
 import model.CollectionImage;
+import model.ImageData;
 import view.ViewImage;
-import view.ViewMenu;
 import viewInterface.ViewInterfaceImage;
-import viewInterface.ViewInterfaceMenu;
 
 public class PresenterMenu{
 	//Attributes
@@ -43,12 +40,13 @@ public class PresenterMenu{
         
         propChangeFirer.firePropertyChange("loadFile", 0, 1); //0,1 for simulating change
 	}
-	public void showImageView(int index){
-		BufferedImage img = collectionImage.getImageList().get(index);
+	public void generateImagePerspectiveMVP(int index){
+		ImageData imgData = collectionImage.getImageList().get(index);
 		
-		ViewImage viewImage = new ViewImage();
-        PresenterImage presenterImage = new PresenterImage(img);
-        new ViewInterfaceImage(viewImage, presenterImage);
+		imgData.generateImageMVP();
+        
+        imgData.generatePerspectiveMVP(0);
+        imgData.generatePerspectiveMVP(1);
 	}
 	
 	/**

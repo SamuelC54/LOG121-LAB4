@@ -13,18 +13,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class ViewImage extends JFrame{
+public class ViewPerspective extends JFrame{
 	//Constants
 	//Attributes
 	private JPanel panneauPrincipal;
-	private viewImageImagePanel imagePanel;
+	private ImagePanel imagePanel;
 	private JButton bCloseView;
 	//Method
-	public ViewImage() {
+	public ViewPerspective(int index) {
 		Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
 		panneauPrincipal = (JPanel)this.getContentPane();
 		
-		imagePanel = new viewImageImagePanel();
+		imagePanel = new ImagePanel();
 		bCloseView = new JButton();
 		
 		panneauPrincipal.setLayout(new BoxLayout(panneauPrincipal, BoxLayout.Y_AXIS));
@@ -39,28 +39,25 @@ public class ViewImage extends JFrame{
 		panneauPrincipal.add(Box.createRigidArea(new Dimension(0,10)));
 		
 		this.setSize(new Dimension(400,600));
-		this.setLocation(screenDimension.width/10-this.getSize().width/2, screenDimension.height/2-this.getSize().height/2);
+		if(index==0){
+			this.setLocation((int)(screenDimension.width/1.75)-this.getSize().width/2, screenDimension.height/2-this.getSize().height/2);
+		}else{
+			this.setLocation((int)(screenDimension.width/1.25)-this.getSize().width/2, screenDimension.height/2-this.getSize().height/2);
+		}
         setResizable(false);
-        setTitle("View Image");
+        setTitle("View Persective " + index);
         setVisible(true);
 	}
 	//
 	public void setImageInPanel(BufferedImage image) {
 		imagePanel.setImage(image);
-		this.setSize(new Dimension(image.getWidth(),image.getHeight()));
-		if(this.getWidth() > 1000){
-			this.setSize(1000, this.getHeight());
-		}
-		if(this.getHeight() > 1000){
-			this.setSize(this.getWidth(),1000);
-		}
 	}
 	//getter/setter
 	public JButton getbCloseView() {
 		return bCloseView;
 	}
 	//private class
-	private class viewImageImagePanel extends JPanel{
+	private class ImagePanel extends JPanel{
 		private BufferedImage image;
 		
 		protected void paintComponent(Graphics g) {

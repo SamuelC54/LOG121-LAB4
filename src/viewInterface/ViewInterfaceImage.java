@@ -1,19 +1,12 @@
 package viewInterface;
 
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
-
 import javax.swing.AbstractAction;
-import javax.swing.DefaultListModel;
-
-import model.CollectionImage;
+import model.ImageData;
 import presenter.PresenterImage;
-import presenter.PresenterMenu;
 import view.ViewImage;
-import view.ViewMenu;
 
 public class ViewInterfaceImage implements PropertyChangeListener{
 	//Attributes
@@ -42,7 +35,7 @@ public class ViewInterfaceImage implements PropertyChangeListener{
         String propName = evt.getPropertyName();
         Object newVal = evt.getNewValue();
         if("setImage".equalsIgnoreCase(propName)){
-            view.setImageInPanel((BufferedImage)newVal);
+            view.setImageInPanel(((ImageData)newVal).getBufferedImage());
         }
     }
 }
