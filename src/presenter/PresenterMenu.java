@@ -13,6 +13,10 @@ import view.ViewImage;
 import viewInterface.ViewInterfaceImage;
 
 public class PresenterMenu{
+	
+	private final int FIRST_VIEW = 0;
+	private final int SECOND_VIEW = 1;
+	
 	//Attributes
 	private SwingPropertyChangeSupport propChangeFirer;
 	private CollectionImage collectionImage = CollectionImage.getInstance();
@@ -24,11 +28,20 @@ public class PresenterMenu{
 	public void addListener(PropertyChangeListener prop) {
         propChangeFirer.addPropertyChangeListener(prop);
     }
-	//
+	
+	/**
+	 * Load the collection of image
+	 */
 	public void loadCollectionImage(){
 		File selectedFile = null;
-		JFileChooser fileChooser = new JFileChooser("C:\\Users\\Sam\\Desktop\\LOG121\\Lab4");
+		
+		//http://stackoverflow.com/questions/22486230/how-to-change-jfilechooser-start-directory-to-desktop
+		
+		String currentFileName = System.getProperty("user.home");
+		JFileChooser fileChooser = new JFileChooser(currentFileName + "/git/LOG121-LAB4/FolderImages");
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		
+		//-------------------------------------------------------------------------------------------------
 		
         int returnValue = fileChooser.showOpenDialog(null);
         
@@ -36,17 +49,26 @@ public class PresenterMenu{
         	selectedFile = fileChooser.getSelectedFile();
         }
         
-        collectionImage.loadFile(selectedFile);
+        if (selectedFile != null) {
+        	collectionImage.loadFile(selectedFile);
+        }
+        
         
         propChangeFirer.firePropertyChange("loadFile", 0, 1); //0,1 for simulating change
 	}
+	
+	/**
+	 * Generate an image perspective
+	 * 
+	 * @param index the index of the image
+	 */
 	public void generateImagePerspectiveMVP(int index){
 		ImageData imgData = collectionImage.getImageList().get(index);
 		
 		imgData.generateImageMVP();
         
-        imgData.generatePerspectiveMVP(0);
-        imgData.generatePerspectiveMVP(1);
+        imgData.generatePerspectiveMVP(FIRST_VIEW);
+        imgData.generatePerspectiveMVP(SECOND_VIEW);
 	}
 	
 	/**

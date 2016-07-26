@@ -21,7 +21,7 @@ public class ViewMenu extends JFrame{
 	private JPanel panneauPrincipal;
 	private JButton bLoadFile;
 	private JButton bOpenImage;
-	private JList<ImageIcon> ListImages;
+	private JList<ImageIcon> listImages;
 	private DefaultListModel<ImageIcon> listModel;
 	private JScrollPane scrollPane;
 	//Method
@@ -30,8 +30,8 @@ public class ViewMenu extends JFrame{
 		panneauPrincipal = (JPanel)this.getContentPane();
 		
 		listModel = new DefaultListModel<ImageIcon>();
-		ListImages = new JList<ImageIcon>(listModel);
-		scrollPane = new JScrollPane(ListImages);
+		listImages = new JList<ImageIcon>(listModel);
+		scrollPane = new JScrollPane(listImages);
 		bLoadFile = new JButton();
 		bOpenImage = new JButton();
 		
@@ -67,6 +67,6 @@ public class ViewMenu extends JFrame{
 		return this.listModel;
 	}
 	public int getSelectedListIndex(){
-		return ListImages.getSelectedIndex();
+		return listImages.getSelectedIndex();
 	}
 }

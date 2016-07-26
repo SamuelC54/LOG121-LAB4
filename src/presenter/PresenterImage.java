@@ -16,10 +16,19 @@ public class PresenterImage{
 		this.image = image;
         propChangeFirer = new SwingPropertyChangeSupport(this);
     }
+	
+	/**
+	 * Add a property change listener to a Swing Property Change Support
+	 * 
+	 * @param prop the listener
+	 */
 	public void addListener(PropertyChangeListener prop) {
         propChangeFirer.addPropertyChangeListener(prop);
     }
 	
+	/**
+	 * Fire a property change
+	 */
 	public void setImage(){
         //after executing this, the viewInterface will be notified that the new address has been set. Its then the viewInterface
         //task to decide what to do when the address in the model has changed. Ideally, the viewInterface will update the view about this

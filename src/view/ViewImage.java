@@ -44,7 +44,11 @@ public class ViewImage extends JFrame{
         setTitle("View Image");
         setVisible(true);
 	}
-	//
+	/**
+	 * Set an image in a panel
+	 * 
+	 * @param image the desired image
+	 */
 	public void setImageInPanel(BufferedImage image) {
 		imagePanel.setImage(image);
 		this.setSize(new Dimension(image.getWidth(),image.getHeight()));
