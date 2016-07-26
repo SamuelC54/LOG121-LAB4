@@ -10,8 +10,10 @@ public class Perspective {
 		this.bufferedImage = img;
 	}
 	//getter/setter
-
 	public BufferedImage getBufferedImage() {
 		return bufferedImage;
+	}
+	public VisualTransformState getVtState() {
+		return vtState;
 	}
 }

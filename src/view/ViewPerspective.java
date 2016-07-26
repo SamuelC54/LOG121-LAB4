@@ -5,6 +5,8 @@ package view;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.Box;
@@ -12,6 +14,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import model.Perspective;
+import model.VisualTransformState;
 
 public class ViewPerspective extends JFrame{
 	//Constants
@@ -49,24 +54,47 @@ public class ViewPerspective extends JFrame{
         setVisible(true);
 	}
 	//
-	public void setImageInPanel(BufferedImage image) {
-		imagePanel.setImage(image);
+	public void setPerspectiveInPanel(Perspective perspective) {
+		imagePanel.setPerspective(perspective);
 	}
 	//getter/setter
 	public JButton getbCloseView() {
 		return bCloseView;
 	}
+	public ImagePanel getImagePanel() {
+		return imagePanel;
+	}
+	public JPanel getPanneauPrincipal() {
+		return panneauPrincipal;
+	}
+
 	//private class
-	private class ImagePanel extends JPanel{
-		private BufferedImage image;
+	public class ImagePanel extends JPanel{
+		private Perspective perspective;
+		private int newImageWidth;
+		private int newImageHeight;
 		
 		protected void paintComponent(Graphics g) {
+			BufferedImage image = perspective.getBufferedImage();
+			VisualTransformState vtState = perspective.getVtState();
+			
+			newImageWidth = (int) (image.getWidth() * vtState.getZoomPercentage());
+			newImageHeight = (int) (image.getHeight() * vtState.getZoomPercentage());
+			int horizontalTranslation = vtState.getHorizontalTranslation();
+			int verticalTranslation = vtState.getVerticalTranslation();
+			
 	        super.paintComponent(g);
-	        g.drawImage(image, 0, 0, null);        
+	        g.drawImage(image, horizontalTranslation, verticalTranslation, newImageWidth , newImageHeight , null);   
 	    }
-		
-		public void setImage(BufferedImage image){
-			this.image = image;
+		public void setPerspective(Perspective perspective){
+			this.perspective = perspective;
 		}
+		public int getNewImageWidth() {
+			return newImageWidth;
+		}
+		public int getNewImageHeight() {
+			return newImageHeight;
+		}
+		
 	}
 }

@@ -18,6 +18,22 @@ public class PresenterPerspective{
 	public void addListener(PropertyChangeListener prop) {
         propChangeFirer.addPropertyChangeListener(prop);
     }
+	public void changeZoom(double Delta){
+		double initialZoom = perspective.getVtState().getZoomPercentage();
+		
+		perspective.getVtState().setZoomPercentage(initialZoom + Delta);
+		
+		setPerspective();
+	}
+	public void changeTranslation(int DeltaX,int DeltaY){
+		int initialTX = perspective.getVtState().getHorizontalTranslation();
+		int initialTY = perspective.getVtState().getVerticalTranslation();
+		
+		perspective.getVtState().setHorizontalTranslation(initialTX + DeltaX);
+		perspective.getVtState().setVerticalTranslation(initialTY + DeltaY);
+		
+		setPerspective();
+	}
 	
 	public void setPerspective(){
         //after executing this, the viewInterface will be notified that the new address has been set. Its then the viewInterface

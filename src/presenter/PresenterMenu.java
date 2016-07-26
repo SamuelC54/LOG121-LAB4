@@ -37,8 +37,8 @@ public class PresenterMenu{
 		
 		//http://stackoverflow.com/questions/22486230/how-to-change-jfilechooser-start-directory-to-desktop
 		
-		String currentFileName = System.getProperty("user.home");
-		JFileChooser fileChooser = new JFileChooser(currentFileName + "/git/LOG121-LAB4/FolderImages");
+		String currentFileName = System.getProperty("user.dir");
+		JFileChooser fileChooser = new JFileChooser(currentFileName + "/FolderImages");
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		
 		//-------------------------------------------------------------------------------------------------
