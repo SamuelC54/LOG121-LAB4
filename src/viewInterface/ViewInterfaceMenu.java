@@ -14,6 +14,9 @@ import javax.swing.ImageIcon;
 
 import model.CollectionImage;
 import model.ImageData;
+import model.commande.Close;
+import model.commande.GestionnaireCommande;
+import model.commande.Load;
 import presenter.PresenterMenu;
 import view.ViewMenu;
 
@@ -34,7 +37,10 @@ public class ViewInterfaceMenu implements PropertyChangeListener{
     private void setUpViewInteraction(){
         view.getbLoadFile().setAction(new AbstractAction("Choose Folder") { 
             public void actionPerformed(ActionEvent arg0) {
-                presenter.loadCollectionImage();
+            	GestionnaireCommande gestCmd = new GestionnaireCommande();
+            	
+            	gestCmd.add(new Load(presenter));
+            	gestCmd.executeAll();
             }
         });
         
@@ -58,11 +64,5 @@ public class ViewInterfaceMenu implements PropertyChangeListener{
         		listModel.addElement(imgdata.getImageIcon());
         	}   
         }
-        
-        /**
-        if("variableX".equalsIgnoreCase(propName)){
-            //view.getVariableX().setText((String)newVal);
-        }
-        **/
     }
 }

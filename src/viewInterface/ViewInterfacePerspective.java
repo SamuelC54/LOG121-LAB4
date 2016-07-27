@@ -1,5 +1,6 @@
 package viewInterface;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,6 +11,10 @@ import javax.swing.AbstractAction;
 import javax.swing.event.MouseInputAdapter;
 
 import model.Perspective;
+import model.commande.Close;
+import model.commande.GestionnaireCommande;
+import model.commande.Translation;
+import model.commande.Zoom;
 import presenter.PresenterPerspective;
 import view.ViewPerspective;
 
@@ -18,8 +23,7 @@ public class ViewInterfacePerspective implements PropertyChangeListener{
     private ViewPerspective view;
     private PresenterPerspective presenter;
     
-    private int mouseX;
-    private int mouseY;
+    private Point mouseLocation;
     //Methods
     public ViewInterfacePerspective(ViewPerspective viewPerspective, PresenterPerspective presenterPerspective){
         this.view = viewPerspective;
@@ -35,51 +39,36 @@ public class ViewInterfacePerspective implements PropertyChangeListener{
     private void setUpViewInteraction(){
     	view.getbCloseView().setAction(new AbstractAction("Close View") { 
             public void actionPerformed(ActionEvent arg0) {
-            	view.dispose();
+            	GestionnaireCommande gestCmd = new GestionnaireCommande();
+            	
+            	gestCmd.add(new Close(view));
+            	gestCmd.executeAll();
             }
         });
     	view.getImagePanel().addMouseWheelListener(new MouseAdapter () { 
-    		 public void mouseWheelMoved(MouseWheelEvent e) {
-    			 int wheelRotation = e.getWheelRotation();
-    			 double zoomPerScroll = 0.1;
-    			 
-    			 if(wheelRotation<0){
-    				 presenter.changeZoom(zoomPerScroll);
-    				 
-    				 double translateScale = zoomPerScroll;
-    				 int translationX = (int) (-view.getImagePanel().getNewImageWidth()/2*translateScale);
-        			 int translationY = (int) (-view.getImagePanel().getNewImageHeight()/2*translateScale);
-
-        			 //presenter.changeTranslation(translationX, translationY);
-    			 }else{
-    				 presenter.changeZoom(-zoomPerScroll);
-    				 
-    				 int translationX = e.getX()-view.getPanneauPrincipal().getWidth()/2;
-        			 int translationY = e.getY()-view.getPanneauPrincipal().getHeight()/2;
-        			 double translateScale = -zoomPerScroll;
-        			 //presenter.changeTranslation((int)(translationX*translateScale), (int)(translationY*translateScale));
-    			 }
-    			 
+    		 public void mouseWheelMoved(MouseWheelEvent event) {
+    			 GestionnaireCommande gestCmd = new GestionnaireCommande();
+             	
+    			 gestCmd.add(new Zoom(presenter,event));
+    			 gestCmd.executeAll();
+             	
     			 view.repaint();
     		 }
         });
     	view.getImagePanel().addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				mouseX = e.getX();
-				mouseY = e.getY();
+				mouseLocation.setLocation(e.getX(), e.getY());
 			}
 		});
 		view.getImagePanel().addMouseMotionListener(new MouseAdapter() {
-			public void mouseDragged(MouseEvent e) {
-				int translationHorizontal = mouseX - e.getX();
-				int translationVertical = mouseY - e.getY();
-
-				presenter.changeTranslation(-translationHorizontal, -translationVertical);
+			public void mouseDragged(MouseEvent event) {
+				GestionnaireCommande gestCmd = new GestionnaireCommande();
+             	
+   			 	gestCmd.add(new Translation(presenter,event,mouseLocation));
+   			 	gestCmd.executeAll();
 				
-				mouseX = e.getX();
-				mouseY = e.getY();
-				
-				view.repaint();
+   			 	mouseLocation.setLocation(event.getX(), event.getY());
+   			 	view.repaint();
 			}
 		});
     }

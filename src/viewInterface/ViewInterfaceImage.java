@@ -5,6 +5,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.AbstractAction;
 import model.ImageData;
+import model.commande.Close;
+import model.commande.GestionnaireCommande;
 import presenter.PresenterImage;
 import view.ViewImage;
 
@@ -27,7 +29,10 @@ public class ViewInterfaceImage implements PropertyChangeListener{
     private void setUpViewInteraction(){
     	view.getbCloseView().setAction(new AbstractAction("Close View") { 
             public void actionPerformed(ActionEvent arg0) {
-            	view.dispose();
+            	GestionnaireCommande gestCmd = new GestionnaireCommande();
+            	
+            	gestCmd.add(new Close(view));
+            	gestCmd.executeAll();
             }
         });
     }
@@ -35,7 +40,7 @@ public class ViewInterfaceImage implements PropertyChangeListener{
         String propName = evt.getPropertyName();
         Object newVal = evt.getNewValue();
         if("setImage".equalsIgnoreCase(propName)){
-            view.setImageInPanel(((ImageData)newVal).getBufferedImage());
+            view.setImageInPanel(((ImageData)newVal));
         }
     }
 }
