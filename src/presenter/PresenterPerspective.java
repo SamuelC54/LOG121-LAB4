@@ -35,6 +35,13 @@ public class PresenterPerspective{
 		setPerspective();
 	}
 	
+	public void savePerspective() {
+		
+	}
+	public void undoAction() {
+		//Undo action
+	}
+	
 	public void setPerspective(){
         //after executing this, the viewInterface will be notified that the new address has been set. Its then the viewInterface
         //task to decide what to do when the address in the model has changed. Ideally, the viewInterface will update the view about this

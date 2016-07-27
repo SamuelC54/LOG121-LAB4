@@ -31,20 +31,16 @@ public class CollectionImage {
 		this.fileDirectory = fileSelected;
 		
 		this.clearAll();
-		
+		int count = 0;
 		for (File f : fileDirectory.listFiles()) {
             BufferedImage img = null;
 
+            
             try {
                 img = ImageIO.read(f);
-                imageList.add(new ImageData(img));
+                imageList.add(new ImageData(img, f.getName()));
                 fileList.add(f);
-                // you probably want something more involved here
-                // to display in your UI
-                //System.out.println("image: " + f.getName());
-                //System.out.println(" width : " + img.getWidth());
-                //System.out.println(" height: " + img.getHeight());
-                //System.out.println(" size  : " + f.length());
+
             } catch (final IOException e) {
                 // handle errors here
             }

@@ -16,7 +16,8 @@ public class PresenterMenu{
 	
 	private final int FIRST_VIEW = 0;
 	private final int SECOND_VIEW = 1;
-	
+	private boolean viewActive = false;
+	ImageData imgData;
 	//Attributes
 	private SwingPropertyChangeSupport propChangeFirer;
 	private CollectionImage collectionImage = CollectionImage.getInstance();
@@ -63,14 +64,24 @@ public class PresenterMenu{
 	 * @param index the index of the image
 	 */
 	public void generateImagePerspectiveMVP(int index){
-		ImageData imgData = collectionImage.getImageList().get(index);
+		this.imgData = collectionImage.getImageList().get(index);
 		
 		imgData.generateImageMVP();
         
         imgData.generatePerspectiveMVP(FIRST_VIEW);
         imgData.generatePerspectiveMVP(SECOND_VIEW);
+        viewActive = true;
 	}
 	
+	public void closeAllViews() {
+		
+		if (viewActive == true) {
+			imgData.disposeAllViews();
+			
+			viewActive = false;
+		}
+		
+	}
 	/**
 	public void setAddress(String address){
         String oldVal = this.variableX;

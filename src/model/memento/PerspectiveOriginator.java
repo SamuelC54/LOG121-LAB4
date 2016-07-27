@@ -26,7 +26,7 @@ public class PerspectiveOriginator {
 	 * 
 	 * @param Memento the memento save.
 	 */
-	public void getStateFromMemento(StateMemento Memento) {
-		state = Memento.getState();
+	public void getStateFromMemento(StateMemento memento) {
+		state = memento.getState();
 	}
 }

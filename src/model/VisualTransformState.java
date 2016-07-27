@@ -7,10 +7,9 @@ public class VisualTransformState {
 	private double zoomPercentage;
 	//Methods
 	public VisualTransformState(){
-		this.horizontalTranslation = 0;
-		this.verticalTranslation = 0;
-		this.zoomPercentage = 1;
+		reset();
 	}
+	
 	//getter/setter
 	public int getHorizontalTranslation() {
 		return horizontalTranslation;
@@ -29,5 +28,11 @@ public class VisualTransformState {
 	}
 	public void setZoomPercentage(double zoomPercentage) {
 		this.zoomPercentage = zoomPercentage;
+	}
+	
+	public void reset() {
+		this.horizontalTranslation = 0;
+		this.verticalTranslation = 0;
+		this.zoomPercentage = 1;
 	}
 }

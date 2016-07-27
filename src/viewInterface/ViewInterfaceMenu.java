@@ -2,67 +2,73 @@
 
 package viewInterface;
 
-import java.awt.Image;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
+import javax.swing.Icon;
+import javax.swing.JLabel;
 
 import model.CollectionImage;
 import model.ImageData;
 import presenter.PresenterMenu;
 import view.ViewMenu;
 
-public class ViewInterfaceMenu implements PropertyChangeListener{
-	//Attributes
-    private ViewMenu view;
-    private PresenterMenu presenter;
-    //Methods
-    public ViewInterfaceMenu(ViewMenu view, PresenterMenu presenter){
-        this.view = view;
-        this.presenter = presenter;
+public class ViewInterfaceMenu implements PropertyChangeListener {
+	// Attributes
+	private ViewMenu viewMenu;
+	private PresenterMenu presenterMenu;
 
-        //register the controller as the listener of the model
-        this.presenter.addListener(this);
+	// Methods
+	public ViewInterfaceMenu(ViewMenu view, PresenterMenu presenter) {
+		this.viewMenu = view;
+		this.presenterMenu = presenter;
 
-        setUpViewInteraction();
-    }
-    private void setUpViewInteraction(){
-        view.getbLoadFile().setAction(new AbstractAction("Choose Folder") { 
-            public void actionPerformed(ActionEvent arg0) {
-                presenter.loadCollectionImage();
-            }
-        });
-        
-        view.getbOpenImage().setAction(new AbstractAction("Open Image") { 
-            public void actionPerformed(ActionEvent arg0) {
-            	presenter.generateImagePerspectiveMVP(view.getSelectedListIndex());
-            }
-        });
-        //...
-    }
-    public void propertyChange(PropertyChangeEvent evt){
-        String propName = evt.getPropertyName();
-        Object newVal = evt.getNewValue();
+		// register the controller as the listener of the model
+		this.presenterMenu.addListener(this);
 
-        if("loadFile".equalsIgnoreCase(propName)){
-        	CollectionImage c = CollectionImage.getInstance();
-        	DefaultListModel<ImageIcon> listModel = view.getListModel();
-        	listModel.clear();
-        	
-        	for(ImageData imgdata : c.getImageList()){
-        		listModel.addElement(imgdata.getImageIcon());
-        	}   
-        }
-        
-        /**
-        if("variableX".equalsIgnoreCase(propName)){
-            //view.getVariableX().setText((String)newVal);
-        }
-        **/
-    }
+		setUpViewInteraction();
+	}
+
+	private void setUpViewInteraction() {
+		viewMenu.getbLoadFile().setAction(new AbstractAction("Choose Folder") {
+			public void actionPerformed(ActionEvent arg0) {
+				presenterMenu.loadCollectionImage();
+			}
+		});
+
+		viewMenu.getbOpenImage().setAction(new AbstractAction("Open Image") {
+			public void actionPerformed(ActionEvent arg0) {
+				presenterMenu.generateImagePerspectiveMVP(viewMenu.getSelectedListIndex());
+			}
+		});
+
+		viewMenu.getbCloseViews().setAction(new AbstractAction("Close Views") {
+			public void actionPerformed(ActionEvent arg0) {
+				presenterMenu.closeAllViews();
+			}
+		});
+	}
+
+	public void propertyChange(PropertyChangeEvent evt) {
+		String propName = evt.getPropertyName();
+
+		if ("loadFile".equalsIgnoreCase(propName)) {
+			CollectionImage c = CollectionImage.getInstance();
+			DefaultListModel<JLabel> listModel = viewMenu.getListModel();
+			listModel.clear();
+			
+			for (ImageData imgdata : c.getImageList()) {
+				JLabel label = new JLabel();
+				label.setIcon((Icon) imgdata.getImageIcon());
+				label.setText(imgdata.getName());
+				
+				listModel.addElement(label);
+			}
+		}
+	}
 }
