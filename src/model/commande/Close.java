@@ -1,5 +1,7 @@
 package model.commande;
 
+import java.awt.event.WindowEvent;
+
 import javax.swing.JFrame;
 
 public class Close implements Commande {
@@ -10,6 +12,6 @@ public class Close implements Commande {
 	}
 
 	public void execute() {
-		frame.dispose();
+		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}
 }

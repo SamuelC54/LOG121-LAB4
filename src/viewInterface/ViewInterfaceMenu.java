@@ -25,7 +25,7 @@ public class ViewInterfaceMenu implements PropertyChangeListener {
 	// Attributes
 	private ViewMenu viewMenu;
 	private PresenterMenu presenterMenu;
-
+	private GestionnaireCommande gestCmd = GestionnaireCommande.getInstance();
 	// Methods
 	public ViewInterfaceMenu(ViewMenu view, PresenterMenu presenter) {
 		this.viewMenu = view;
@@ -39,7 +39,6 @@ public class ViewInterfaceMenu implements PropertyChangeListener {
     private void setUpViewInteraction(){
     	viewMenu.getbLoadFile().setAction(new AbstractAction("Choose Folder") { 
             public void actionPerformed(ActionEvent arg0) {
-            	GestionnaireCommande gestCmd = new GestionnaireCommande();
             	
             	gestCmd.add(new Load(presenterMenu));
             	gestCmd.executeAll();
@@ -48,7 +47,9 @@ public class ViewInterfaceMenu implements PropertyChangeListener {
         
     	viewMenu.getbOpenImage().setAction(new AbstractAction("Open Image") { 
             public void actionPerformed(ActionEvent arg0) {
-            	presenterMenu.generateImagePerspectiveMVP(viewMenu.getSelectedListIndex());
+            	if (viewMenu.getSelectedListIndex() > -1) {
+            		presenterMenu.generateImagePerspectiveMVP(viewMenu.getSelectedListIndex());	
+            	}
             }
         });
         

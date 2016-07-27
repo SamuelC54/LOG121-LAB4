@@ -14,6 +14,7 @@ public class ViewInterfaceImage implements PropertyChangeListener{
 	//Attributes
     private ViewImage view;
     private PresenterImage presenter;
+    private GestionnaireCommande gestCmd  = GestionnaireCommande.getInstance();
     //Methods
     public ViewInterfaceImage(ViewImage view, PresenterImage presenter){
         this.view = view;
@@ -29,7 +30,6 @@ public class ViewInterfaceImage implements PropertyChangeListener{
     private void setUpViewInteraction(){
     	view.getbCloseView().setAction(new AbstractAction("Close View") { 
             public void actionPerformed(ActionEvent arg0) {
-            	GestionnaireCommande gestCmd = new GestionnaireCommande();
             	
             	gestCmd.add(new Close(view));
             	gestCmd.executeAll();

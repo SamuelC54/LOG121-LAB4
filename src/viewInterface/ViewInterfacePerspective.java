@@ -13,6 +13,7 @@ import javax.swing.AbstractAction;
 import model.Perspective;
 import model.commande.Close;
 import model.commande.GestionnaireCommande;
+import model.commande.Sauvegarder;
 import model.commande.Translation;
 import model.commande.Zoom;
 import presenter.PresenterPerspective;
@@ -22,7 +23,7 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 	// Attributes
 	private ViewPerspective viewPerspective;
 	private PresenterPerspective presenterPerspective;
-
+	private GestionnaireCommande gestCmd = GestionnaireCommande.getInstance();
 	private Point mouseLocation = new Point();
 
 	// Methods
@@ -32,6 +33,7 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 
 		// register the controller as the listener of the model
 		this.presenterPerspective.addListener(this);
+		this.viewPerspective.addListener(this);
 
 		setUpViewInteraction();
 
@@ -41,8 +43,10 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 	private void setUpViewInteraction() {
 		viewPerspective.getbSave().setAction(new AbstractAction("Save") {
 			public void actionPerformed(ActionEvent arg0) {
-				// Undo
-				presenterPerspective.savePerspective();
+				// Save
+				gestCmd.add(new Sauvegarder(presenterPerspective));
+				gestCmd.executeAll();
+
 			}
 		});
 		viewPerspective.getbUndo().setAction(new AbstractAction("Undo") {
@@ -53,7 +57,6 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 		});
 		viewPerspective.getbCloseView().setAction(new AbstractAction("Close View") {
 			public void actionPerformed(ActionEvent arg0) {
-				GestionnaireCommande gestCmd = new GestionnaireCommande();
 
 				gestCmd.add(new Close(viewPerspective));
 				gestCmd.executeAll();
@@ -61,7 +64,6 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 		});
 		viewPerspective.getImagePanel().addMouseWheelListener(new MouseAdapter() {
 			public void mouseWheelMoved(MouseWheelEvent event) {
-				GestionnaireCommande gestCmd = new GestionnaireCommande();
 
 				gestCmd.add(new Zoom(presenterPerspective, event));
 				gestCmd.executeAll();
@@ -76,7 +78,6 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 		});
 		viewPerspective.getImagePanel().addMouseMotionListener(new MouseAdapter() {
 			public void mouseDragged(MouseEvent event) {
-				GestionnaireCommande gestCmd = new GestionnaireCommande();
 
 				gestCmd.add(new Translation(presenterPerspective, event, mouseLocation));
 				gestCmd.executeAll();
@@ -92,6 +93,14 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 		Object newVal = evt.getNewValue();
 		if ("setPerspective".equalsIgnoreCase(propName)) {
 			viewPerspective.setPerspectiveInPanel(((Perspective) newVal));
+		}
+		if ("resetPerspective".equalsIgnoreCase(propName)) {
+
+			if (presenterPerspective.getSaves().hasSaves()) {
+				presenterPerspective.getPerspective().setVtState(presenterPerspective.getSaves().getCurrentState());
+			} else {
+				//presenterPerspective.resetVTState();
+			}
 		}
 	}
 }

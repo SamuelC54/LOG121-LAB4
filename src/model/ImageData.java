@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import model.memento.GestionnaireSauvegarde;
 import presenter.PresenterImage;
 import presenter.PresenterPerspective;
 import view.ViewImage;
@@ -16,12 +17,12 @@ import viewInterface.ViewInterfaceImage;
 import viewInterface.ViewInterfacePerspective;
 
 public class ImageData {
-	BufferedImage bufferedImage;
-	ImageIcon imageIcon;
-	String name;
-	Perspective[] perspective = new Perspective[2];
-	ViewImage viewImage;
-	List<ViewPerspective> viewPerspectives = new ArrayList<ViewPerspective>();
+	private BufferedImage bufferedImage;
+	private ImageIcon imageIcon;
+	private String name;
+	private Perspective[] perspective = new Perspective[2];
+	private List<ViewImage> viewImages = new ArrayList<ViewImage>();
+	private List<ViewPerspective> viewPerspectives = new ArrayList<ViewPerspective>();
 
 	// Methods
 	public ImageData(BufferedImage img, String imgName) {
@@ -36,15 +37,17 @@ public class ImageData {
 
 	public void generatePerspectiveMVP(int perspectiveIndex) {
 		ViewPerspective viewPerspective = new ViewPerspective(perspectiveIndex);
-
+		GestionnaireSauvegarde saves = new GestionnaireSauvegarde();
 		viewPerspectives.add(viewPerspective);
 
-		PresenterPerspective presenterPerspective = new PresenterPerspective(perspective[perspectiveIndex]);
+		PresenterPerspective presenterPerspective = new PresenterPerspective(perspective[perspectiveIndex],saves);
+		
 		new ViewInterfacePerspective(viewPerspective, presenterPerspective);
 	}
 
 	public void generateImageMVP() {
-		this.viewImage = new ViewImage();
+		ViewImage viewImage = new ViewImage();
+		viewImages.add(viewImage);
 		PresenterImage presenterImage = new PresenterImage(this);
 		new ViewInterfaceImage(viewImage, presenterImage);
 	}
@@ -54,12 +57,15 @@ public class ImageData {
 	 */
 	public void disposeAllViews() {
 
-		this.viewImage.dispose();
-
+		for (ViewImage viewIm : this.viewImages) {
+			viewIm.dispose();
+		}
+		viewImages.clear();
 		for (ViewPerspective viewPerspect : this.viewPerspectives) {
 			viewPerspect.dispatchEvent(new WindowEvent(viewPerspect, WindowEvent.WINDOW_CLOSING));
 		}
 		viewPerspectives.clear();
+		
 	}
 
 	// getter/setter

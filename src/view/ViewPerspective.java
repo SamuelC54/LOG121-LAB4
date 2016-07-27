@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -13,12 +14,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.event.SwingPropertyChangeSupport;
 
 import model.Perspective;
 
 public class ViewPerspective extends JFrame {
 	// Constants
 	// Attributes
+	private SwingPropertyChangeSupport propChangeFirer;
 	private JPanel panneauPrincipal;
 	private ImagePanel imagePanel;
 	private JButton bCloseView;
@@ -30,6 +33,8 @@ public class ViewPerspective extends JFrame {
 		Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
 		panneauPrincipal = (JPanel) this.getContentPane();
 
+		propChangeFirer = new SwingPropertyChangeSupport(this);
+		
 		imagePanel = new ImagePanel();
 		bCloseView = new JButton();
 		bSave = new JButton();
@@ -67,11 +72,14 @@ public class ViewPerspective extends JFrame {
 
 			@Override
 			public void windowClosing(WindowEvent e) {
-				//Reset
-				
+				propChangeFirer.firePropertyChange("resetPerspective", -1, this);
 			}
 		});
 	}
+	
+	public void addListener(PropertyChangeListener prop) {
+        propChangeFirer.addPropertyChangeListener(prop);
+    }
 
 	//
 	public void setPerspectiveInPanel(Perspective perspective) {

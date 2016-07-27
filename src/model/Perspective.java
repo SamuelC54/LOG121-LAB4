@@ -16,4 +16,8 @@ public class Perspective {
 	public VisualTransformState getVtState() {
 		return vtState;
 	}
+	public void setVtState(VisualTransformState vtState) {
+		this.vtState = vtState;
+	}
+	
 }
