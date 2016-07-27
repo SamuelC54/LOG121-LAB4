@@ -15,6 +15,9 @@ import javax.swing.JLabel;
 
 import model.CollectionImage;
 import model.ImageData;
+import model.commande.Close;
+import model.commande.GestionnaireCommande;
+import model.commande.Load;
 import presenter.PresenterMenu;
 import view.ViewMenu;
 
@@ -31,28 +34,32 @@ public class ViewInterfaceMenu implements PropertyChangeListener {
 		// register the controller as the listener of the model
 		this.presenterMenu.addListener(this);
 
-		setUpViewInteraction();
-	}
-
-	private void setUpViewInteraction() {
-		viewMenu.getbLoadFile().setAction(new AbstractAction("Choose Folder") {
-			public void actionPerformed(ActionEvent arg0) {
-				presenterMenu.loadCollectionImage();
-			}
-		});
-
-		viewMenu.getbOpenImage().setAction(new AbstractAction("Open Image") {
-			public void actionPerformed(ActionEvent arg0) {
-				presenterMenu.generateImagePerspectiveMVP(viewMenu.getSelectedListIndex());
-			}
-		});
-
-		viewMenu.getbCloseViews().setAction(new AbstractAction("Close Views") {
+        setUpViewInteraction();
+    }
+    private void setUpViewInteraction(){
+    	viewMenu.getbLoadFile().setAction(new AbstractAction("Choose Folder") { 
+            public void actionPerformed(ActionEvent arg0) {
+            	GestionnaireCommande gestCmd = new GestionnaireCommande();
+            	
+            	gestCmd.add(new Load(presenterMenu));
+            	gestCmd.executeAll();
+            }
+        });
+        
+    	viewMenu.getbOpenImage().setAction(new AbstractAction("Open Image") { 
+            public void actionPerformed(ActionEvent arg0) {
+            	presenterMenu.generateImagePerspectiveMVP(viewMenu.getSelectedListIndex());
+            }
+        });
+        
+        viewMenu.getbCloseViews().setAction(new AbstractAction("Close Views") {
 			public void actionPerformed(ActionEvent arg0) {
 				presenterMenu.closeAllViews();
 			}
 		});
-	}
+    }
+
+
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propName = evt.getPropertyName();
@@ -71,4 +78,5 @@ public class ViewInterfaceMenu implements PropertyChangeListener {
 			}
 		}
 	}
+
 }

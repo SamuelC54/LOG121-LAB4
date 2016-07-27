@@ -1,5 +1,6 @@
 package viewInterface;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,6 +11,10 @@ import java.beans.PropertyChangeListener;
 import javax.swing.AbstractAction;
 
 import model.Perspective;
+import model.commande.Close;
+import model.commande.GestionnaireCommande;
+import model.commande.Translation;
+import model.commande.Zoom;
 import presenter.PresenterPerspective;
 import view.ViewPerspective;
 
@@ -18,8 +23,7 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 	private ViewPerspective viewPerspective;
 	private PresenterPerspective presenterPerspective;
 
-	private int mouseX;
-	private int mouseY;
+	private Point mouseLocation = new Point();
 
 	// Methods
 	public ViewInterfacePerspective(ViewPerspective viewPerspective, PresenterPerspective presenterPerspective) {
@@ -35,53 +39,49 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 	}
 
 	private void setUpViewInteraction() {
-		viewPerspective.getbCloseView().setAction(new AbstractAction("Close View") {
-			public void actionPerformed(ActionEvent arg0) {
-				viewPerspective.dispose();
-			}
-		});
 		viewPerspective.getbSave().setAction(new AbstractAction("Save") {
 			public void actionPerformed(ActionEvent arg0) {
-				//Undo 
+				// Undo
 				presenterPerspective.savePerspective();
 			}
 		});
 		viewPerspective.getbUndo().setAction(new AbstractAction("Undo") {
 			public void actionPerformed(ActionEvent arg0) {
-				//Undo 
+				// Undo
 				presenterPerspective.undoAction();
 			}
 		});
-		viewPerspective.getImagePanel().addMouseWheelListener(new MouseAdapter() {
-			public void mouseWheelMoved(MouseWheelEvent e) {
-				int wheelRotation = e.getWheelRotation();
-				double zoomPerScroll = 0.1;
+		viewPerspective.getbCloseView().setAction(new AbstractAction("Close View") {
+			public void actionPerformed(ActionEvent arg0) {
+				GestionnaireCommande gestCmd = new GestionnaireCommande();
 
-				if (wheelRotation < 0) {
-					presenterPerspective.changeZoom(zoomPerScroll);
-				} else {
-					presenterPerspective.changeZoom(-zoomPerScroll);
-				}
+				gestCmd.add(new Close(viewPerspective));
+				gestCmd.executeAll();
+			}
+		});
+		viewPerspective.getImagePanel().addMouseWheelListener(new MouseAdapter() {
+			public void mouseWheelMoved(MouseWheelEvent event) {
+				GestionnaireCommande gestCmd = new GestionnaireCommande();
+
+				gestCmd.add(new Zoom(presenterPerspective, event));
+				gestCmd.executeAll();
 
 				viewPerspective.repaint();
 			}
 		});
 		viewPerspective.getImagePanel().addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				mouseX = e.getX();
-				mouseY = e.getY();
+				mouseLocation.setLocation(e.getX(), e.getY());
 			}
 		});
 		viewPerspective.getImagePanel().addMouseMotionListener(new MouseAdapter() {
-			public void mouseDragged(MouseEvent e) {
-				int translationHorizontal = mouseX - e.getX();
-				int translationVertical = mouseY - e.getY();
+			public void mouseDragged(MouseEvent event) {
+				GestionnaireCommande gestCmd = new GestionnaireCommande();
 
-				presenterPerspective.changeTranslation(-translationHorizontal, -translationVertical);
+				gestCmd.add(new Translation(presenterPerspective, event, mouseLocation));
+				gestCmd.executeAll();
 
-				mouseX = e.getX();
-				mouseY = e.getY();
-
+				mouseLocation.setLocation(event.getX(), event.getY());
 				viewPerspective.repaint();
 			}
 		});

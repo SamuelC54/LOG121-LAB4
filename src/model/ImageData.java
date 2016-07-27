@@ -75,4 +75,7 @@ public class ImageData {
 	public ImageIcon getImageIcon() {
 		return imageIcon;
 	}
+	public Perspective getPerspective(int index){
+		return perspective[index];
+	}
 }
