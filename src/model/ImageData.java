@@ -42,7 +42,7 @@ public class ImageData {
 
 		PresenterPerspective presenterPerspective = new PresenterPerspective(perspective[perspectiveIndex],saves);
 		
-		new ViewInterfacePerspective(viewPerspective, presenterPerspective);
+		new ViewInterfacePerspective(viewPerspective, presenterPerspective,viewImages.get(0));
 	}
 
 	public void generateImageMVP() {
@@ -72,12 +72,9 @@ public class ImageData {
 	public BufferedImage getBufferedImage() {
 		return bufferedImage;
 	}
-
-	
 	public String getName() {
 		return name;
 	}
-
 	public ImageIcon getImageIcon() {
 		return imageIcon;
 	}

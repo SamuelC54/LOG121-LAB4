@@ -17,6 +17,7 @@ import model.commande.Sauvegarder;
 import model.commande.Translation;
 import model.commande.Zoom;
 import presenter.PresenterPerspective;
+import view.ViewImage;
 import view.ViewPerspective;
 
 public class ViewInterfacePerspective implements PropertyChangeListener {
@@ -25,11 +26,12 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 	private PresenterPerspective presenterPerspective;
 	private GestionnaireCommande gestCmd = GestionnaireCommande.getInstance();
 	private Point mouseLocation = new Point();
-
+	private ViewImage viewImage;
 	// Methods
-	public ViewInterfacePerspective(ViewPerspective viewPerspective, PresenterPerspective presenterPerspective) {
+	public ViewInterfacePerspective(ViewPerspective viewPerspective, PresenterPerspective presenterPerspective, ViewImage viewImage) {
 		this.viewPerspective = viewPerspective;
 		this.presenterPerspective = presenterPerspective;
+		this.viewImage = viewImage;
 
 		// register the controller as the listener of the model
 		this.presenterPerspective.addListener(this);
@@ -69,6 +71,7 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 				gestCmd.executeAll();
 
 				viewPerspective.repaint();
+				viewImage.repaint();
 			}
 		});
 		viewPerspective.getImagePanel().addMouseListener(new MouseAdapter() {
@@ -84,6 +87,7 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 
 				mouseLocation.setLocation(event.getX(), event.getY());
 				viewPerspective.repaint();
+				viewImage.repaint();
 			}
 		});
 	}
