@@ -50,7 +50,13 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 	private GestionnaireSauvegarde listActions = new GestionnaireSauvegarde();
 	private ViewImage viewImage;
 
-	// Methods
+	/**
+	 * Constructor
+	 * 
+	 * @param viewPerspective the view of the interface
+	 * @param presenterPerspective the presenter of the interface
+	 * @param viewImage the view image used in this interface
+	 */
 	public ViewInterfacePerspective(ViewPerspective viewPerspective, PresenterPerspective presenterPerspective,
 			ViewImage viewImage) {
 		this.viewPerspective = viewPerspective;

@@ -1,3 +1,22 @@
+/******************************************************
+Cours:   LOG121
+Session: E2016
+Groupe:  01
+Projet: Laboratoire #4
+Étudiant(e)s: 
+              Philippe Torres-Brisebois
+              Laurent Theroux-Bombardier
+              Samuel Croteau
+              Nelson Chao
+Professeur : Francis Cardinal
+Nom du fichier: ViewInterfaceImage.java
+Date créé: 2016-07-27
+Date dern. modif. 2016-07-27
+*******************************************************
+Historique des modifications
+*******************************************************
+2016-07-27 Version initiale
+*******************************************************/
 package viewInterface;
 
 import java.awt.event.ActionEvent;
@@ -27,6 +46,9 @@ public class ViewInterfaceImage implements PropertyChangeListener{
         
         presenter.setImage();
     }
+    /**
+     * Setup the interaction for the view
+     */
     private void setUpViewInteraction(){
     	view.getbCloseView().setAction(new AbstractAction("Close View") { 
             public void actionPerformed(ActionEvent arg0) {
@@ -36,6 +58,9 @@ public class ViewInterfaceImage implements PropertyChangeListener{
             }
         });
     }
+    /**
+     * Detect and do action corresponding to the event
+     */
     public void propertyChange(PropertyChangeEvent evt){
         String propName = evt.getPropertyName();
         Object newVal = evt.getNewValue();

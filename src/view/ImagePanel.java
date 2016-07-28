@@ -1,3 +1,23 @@
+/******************************************************
+Cours:   LOG121
+Session: E2016
+Groupe:  01
+Projet: Laboratoire #4
+Étudiant(e)s: 
+              Philippe Torres-Brisebois
+              Laurent Theroux-Bombardier
+              Samuel Croteau
+              Nelson Chao
+Professeur : Francis Cardinal
+Nom du fichier: ImagePanel.java
+Date créé: 2016-07-27
+Date dern. modif. 2016-07-27
+*******************************************************
+Historique des modifications
+*******************************************************
+2016-07-27 Version initiale
+*******************************************************/
+
 package view;
 
 import java.awt.Graphics;
@@ -16,6 +36,9 @@ public class ImagePanel extends JPanel {
 	private int newImageWidth;
 	private int newImageHeight;
 
+	/**
+	 * Paint the panel
+	 */
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 

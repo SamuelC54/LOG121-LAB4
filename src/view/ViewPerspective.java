@@ -1,4 +1,22 @@
-//MVP inspirer de Bnrdo - http://stackoverflow.com/questions/5217611/the-mvc-pattern-and-swing
+/******************************************************
+Cours:   LOG121
+Session: E2016
+Groupe:  01
+Projet: Laboratoire #4
+Étudiant(e)s: 
+              Philippe Torres-Brisebois
+              Laurent Theroux-Bombardier
+              Samuel Croteau
+              Nelson Chao
+Professeur : Francis Cardinal
+Nom du fichier: ViewPerspective.java
+Date créé: 2016-07-27
+Date dern. modif. 2016-07-27
+*******************************************************
+Historique des modifications
+*******************************************************
+2016-07-27 Version initiale
+*******************************************************/
 
 package view;
 
@@ -12,12 +30,13 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.SwingPropertyChangeSupport;
 
 import model.Perspective;
 
+//Cette classe a ete inspirer du site suivant:
+//MVP INSPIRER DE BNRDO - HTTP://STACKOVERFLOW.COM/QUESTIONS/5217611/THE-MVC-PATTERN-AND-SWING
 public class ViewPerspective extends JFrame {
 	// Constants
 	// Attributes
@@ -28,13 +47,17 @@ public class ViewPerspective extends JFrame {
 	private JButton bSave;
 	private JButton bUndo;
 
-	// Method
+	/**
+	 * Constructor
+	 * 
+	 * @param index the index of the view
+	 */
 	public ViewPerspective(int index) {
 		Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
 		panneauPrincipal = (JPanel) this.getContentPane();
 
 		propChangeFirer = new SwingPropertyChangeSupport(this);
-		
+
 		imagePanel = new ImagePanel();
 		bCloseView = new JButton();
 		bSave = new JButton();
@@ -76,12 +99,23 @@ public class ViewPerspective extends JFrame {
 			}
 		});
 	}
-	
-	public void addListener(PropertyChangeListener prop) {
-        propChangeFirer.addPropertyChangeListener(prop);
-    }
 
-	//
+	/**
+	 * Add a listener to the view
+	 * 
+	 * @param prop
+	 *            the listener
+	 */
+	public void addListener(PropertyChangeListener prop) {
+		propChangeFirer.addPropertyChangeListener(prop);
+	}
+
+	/**
+	 * Set the perspective in the panel
+	 * 
+	 * @param perspective
+	 *            the perspective to set
+	 */
 	public void setPerspectiveInPanel(Perspective perspective) {
 		imagePanel.setPerspective(perspective);
 	}

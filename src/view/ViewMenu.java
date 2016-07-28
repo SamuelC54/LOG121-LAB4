@@ -1,4 +1,23 @@
-//MVP inspirer de Bnrdo - http://stackoverflow.com/questions/5217611/the-mvc-pattern-and-swing
+/******************************************************
+Cours:   LOG121
+Session: E2016
+Groupe:  01
+Projet: Laboratoire #4
+Étudiant(e)s: 
+              Philippe Torres-Brisebois
+              Laurent Theroux-Bombardier
+              Samuel Croteau
+              Nelson Chao
+Professeur : Francis Cardinal
+Nom du fichier: ViewMenu.java
+Date créé: 2016-07-27
+Date dern. modif. 2016-07-27
+*******************************************************
+Historique des modifications
+*******************************************************
+2016-07-27 Version initiale
+*******************************************************/
+
 
 package view;
 
@@ -16,6 +35,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+//Cette classe a ete inspirer du site suivant:
+//MVP inspirer de Bnrdo - http://stackoverflow.com/questions/5217611/the-mvc-pattern-and-swing
 public class ViewMenu extends JFrame {
 	// Constants
 	// Attributes
@@ -27,7 +48,9 @@ public class ViewMenu extends JFrame {
 	private DefaultListModel<JLabel> listModel;
 	private JScrollPane scrollPane;
 
-	// Method
+	/**
+	 * Constructor
+	 */
 	public ViewMenu() {
 		Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
 		panneauPrincipal = (JPanel) this.getContentPane();
@@ -84,6 +107,11 @@ public class ViewMenu extends JFrame {
 		return this.listModel;
 	}
 
+	/**
+	 * Get the selected index of the JList of image
+	 * 
+	 * @return the selected index
+	 */
 	public int getSelectedListIndex() {
 		return listImages.getSelectedIndex();
 	}

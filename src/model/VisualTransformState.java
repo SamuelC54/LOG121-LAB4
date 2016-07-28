@@ -1,3 +1,23 @@
+/******************************************************
+Cours:   LOG121
+Session: E2016
+Groupe:  01
+Projet: Laboratoire #4
+Étudiant(e)s: 
+              Philippe Torres-Brisebois
+              Laurent Theroux-Bombardier
+              Samuel Croteau
+              Nelson Chao
+Professeur : Francis Cardinal
+Nom du fichier: VisualTransformState.java
+Date créé: 2016-07-27
+Date dern. modif. 2016-07-27
+*******************************************************
+Historique des modifications
+*******************************************************
+2016-07-27 Version initiale
+*******************************************************/
+
 package model;
 
 public class VisualTransformState implements Cloneable{
@@ -5,11 +25,19 @@ public class VisualTransformState implements Cloneable{
 	private int horizontalTranslation;
 	private int verticalTranslation;
 	private double zoomPercentage;
-	//Methods
+	
+	/**
+	 * Constructor
+	 */
 	public VisualTransformState(){
 		reset();
 	}
 
+	/**
+	 * Return a copy of the class
+	 * 
+	 * @return the copy of the class
+	 */
 	public VisualTransformState getCopy() {
 		try {
 			return (VisualTransformState) this.clone();
@@ -40,6 +68,9 @@ public class VisualTransformState implements Cloneable{
 		this.zoomPercentage = zoomPercentage;
 	}
 	
+	/**
+	 * Reset the parameter of the visual transform
+	 */
 	public void reset() {
 		this.horizontalTranslation = 0;
 		this.verticalTranslation = 0;

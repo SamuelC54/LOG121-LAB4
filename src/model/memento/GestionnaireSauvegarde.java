@@ -1,3 +1,23 @@
+/******************************************************
+Cours:   LOG121
+Session: E2016
+Groupe:  01
+Projet: Laboratoire #4
+Étudiant(e)s: 
+              Philippe Torres-Brisebois
+              Laurent Theroux-Bombardier
+              Samuel Croteau
+              Nelson Chao
+Professeur : Francis Cardinal
+Nom du fichier: GestionnaireSauvegarde.java
+Date créé: 2016-07-27
+Date dern. modif. 2016-07-27
+*******************************************************
+Historique des modifications
+*******************************************************
+2016-07-27 Version initiale
+*******************************************************/
+
 package model.memento;
 
 import java.util.ArrayList;
@@ -43,6 +63,11 @@ public class GestionnaireSauvegarde {
 		return null;
 	}
 
+	/**
+	 * Get the previous state of the state
+	 * 
+	 * @return the previous state
+	 */
 	public VisualTransformState getPreviousState() {
 		if (!this.removed) {
 			imageSavedState.remove(imageSavedState.size() - 1);

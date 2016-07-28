@@ -1,3 +1,23 @@
+/******************************************************
+Cours:   LOG121
+Session: E2016
+Groupe:  01
+Projet: Laboratoire #4
+Étudiant(e)s: 
+              Philippe Torres-Brisebois
+              Laurent Theroux-Bombardier
+              Samuel Croteau
+              Nelson Chao
+Professeur : Francis Cardinal
+Nom du fichier: ImageData.java
+Date créé: 2016-07-27
+Date dern. modif. 2016-07-27
+*******************************************************
+Historique des modifications
+*******************************************************
+2016-07-27 Version initiale
+*******************************************************/
+
 package model;
 
 import java.awt.Image;
@@ -24,7 +44,12 @@ public class ImageData {
 	private List<ViewImage> viewImages = new ArrayList<ViewImage>();
 	private List<ViewPerspective> viewPerspectives = new ArrayList<ViewPerspective>();
 
-	// Methods
+	/**
+	 * Constructor
+	 * 
+	 * @param img the image of the image data
+	 * @param imgName the name of the image
+	 */
 	public ImageData(BufferedImage img, String imgName) {
 		this.bufferedImage = img;
 		this.name = imgName;
@@ -35,16 +60,24 @@ public class ImageData {
 		perspective[1] = new Perspective(img);
 	}
 
+	/**
+	 * Generate a perspective for the mvp
+	 * 
+	 * @param perspectiveIndex the perspective index
+	 */
 	public void generatePerspectiveMVP(int perspectiveIndex) {
 		ViewPerspective viewPerspective = new ViewPerspective(perspectiveIndex);
 		GestionnaireSauvegarde saves = new GestionnaireSauvegarde();
 		viewPerspectives.add(viewPerspective);
 
-		PresenterPerspective presenterPerspective = new PresenterPerspective(perspective[perspectiveIndex],saves);
+		PresenterPerspective presenterPerspective = new PresenterPerspective(perspective[perspectiveIndex]);
 		
 		new ViewInterfacePerspective(viewPerspective, presenterPerspective,viewImages.get(0));
 	}
 
+	/**
+	 * Generate the thumbnail image of the image
+	 */
 	public void generateImageMVP() {
 		ViewImage viewImage = new ViewImage();
 		viewImages.add(viewImage);

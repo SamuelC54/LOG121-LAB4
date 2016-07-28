@@ -1,4 +1,23 @@
-//MVP inspirer de Bnrdo - http://stackoverflow.com/questions/5217611/the-mvc-pattern-and-swing
+/******************************************************
+Cours:   LOG121
+Session: E2016
+Groupe:  01
+Projet: Laboratoire #4
+Étudiant(e)s: 
+              Philippe Torres-Brisebois
+              Laurent Theroux-Bombardier
+              Samuel Croteau
+              Nelson Chao
+Professeur : Francis Cardinal
+Nom du fichier: ViewImage.java
+Date créé: 2016-07-27
+Date dern. modif. 2016-07-27
+*******************************************************
+Historique des modifications
+*******************************************************
+2016-07-27 Version initiale
+*******************************************************/
+
 
 package view;
 
@@ -17,6 +36,8 @@ import javax.swing.JPanel;
 import model.ImageData;
 import model.Perspective;
 
+//Cette classe a ete inspirer du site suivant:
+//MVP inspirer de Bnrdo - http://stackoverflow.com/questions/5217611/the-mvc-pattern-and-swing
 public class ViewImage extends JFrame{
 	//Constants
 	//Attributes
@@ -67,6 +88,7 @@ public class ViewImage extends JFrame{
 	public JButton getbCloseView() {
 		return bCloseView;
 	}
+	
 	//private class
 	private class viewImageImagePanel extends JPanel{
 		private ImageData image;

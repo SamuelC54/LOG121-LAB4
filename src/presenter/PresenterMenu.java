@@ -1,4 +1,22 @@
-//MVP inspirer de Bnrdo - http://stackoverflow.com/questions/5217611/the-mvc-pattern-and-swing
+/******************************************************
+Cours:   LOG121
+Session: E2016
+Groupe:  01
+Projet: Laboratoire #4
+Étudiant(e)s: 
+              Philippe Torres-Brisebois
+              Laurent Theroux-Bombardier
+              Samuel Croteau
+              Nelson Chao
+Professeur : Francis Cardinal
+Nom du fichier: PresenterMenu.java
+Date créé: 2016-07-27
+Date dern. modif. 2016-07-27
+*******************************************************
+Historique des modifications
+*******************************************************
+2016-07-27 Version initiale
+*******************************************************/
 
 package presenter;
 
@@ -10,8 +28,9 @@ import javax.swing.event.SwingPropertyChangeSupport;
 
 import model.CollectionImage;
 import model.ImageData;
-import viewInterface.ViewInterfacePerspective;
 
+//Cette classe a ete inspirer du site suivant:
+//MVP inspirer de Bnrdo - http://stackoverflow.com/questions/5217611/the-mvc-pattern-and-swing
 public class PresenterMenu {
 
 	private final int FIRST_VIEW = 0;
@@ -62,6 +81,9 @@ public class PresenterMenu {
 		return propChangeFirer;
 	}
 
+	/**
+	 * Close all views
+	 */
 	public void closeAllViews() {
 
 		if (viewActive == true) {

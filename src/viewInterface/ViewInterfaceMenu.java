@@ -44,7 +44,12 @@ public class ViewInterfaceMenu implements PropertyChangeListener {
 	private PresenterMenu presenterMenu;
 	private GestionnaireCommande gestCmd = GestionnaireCommande.getInstance();
 
-	// Methods
+	/**
+	 * Constructior
+	 * 
+	 * @param view the view of the interface
+	 * @param presenter the presenter of the interface
+	 */
 	public ViewInterfaceMenu(ViewMenu view, PresenterMenu presenter) {
 		this.viewMenu = view;
 		this.presenterMenu = presenter;
@@ -82,7 +87,9 @@ public class ViewInterfaceMenu implements PropertyChangeListener {
 		});
 	}
 
-	//Read a command from an event
+	/**
+	 * Detect and do action corresponding to the eventt
+	 */
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propName = evt.getPropertyName();
 
