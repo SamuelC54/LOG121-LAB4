@@ -20,7 +20,6 @@ public class GestionnaireSauvegarde {
 		VisualTransformState copyState = state.getCopy();
 		imageSavedState.add(copyState);
 		this.removed = false;
-		System.out.println("Added" + imageSavedState.size());
 	}
 
 	/**
@@ -45,7 +44,6 @@ public class GestionnaireSauvegarde {
 	}
 
 	public VisualTransformState getPreviousState() {
-		System.out.println(imageSavedState.size());
 		if (!this.removed) {
 			imageSavedState.remove(imageSavedState.size() - 1);
 			this.removed = true;

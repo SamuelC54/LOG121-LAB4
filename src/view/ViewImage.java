@@ -75,15 +75,20 @@ public class ViewImage extends JFrame{
 	        super.paintComponent(g);
 	        g.drawImage(image.getBufferedImage(), 0, 0, null);     
 	        g.setColor(Color.GREEN);
-	        Perspective perspective0 = image.getPerspective(0);
+	        drawPerspectiveRect(g,0);
+	        g.setColor(Color.RED);
+	        drawPerspectiveRect(g,1);
+	    }
+		
+		public void drawPerspectiveRect(Graphics g, int index){
+			Perspective perspective0 = image.getPerspective(index);
 	        int x = perspective0.getVtState().getHorizontalTranslation();
 	        int y = perspective0.getVtState().getVerticalTranslation();
 	        double zoom = perspective0.getVtState().getZoomPercentage();
-	        int width = (int) (perspective0.getBufferedImage().getWidth() * zoom);
-	        int height = (int) (perspective0.getBufferedImage().getHeight() * zoom);
-	        
-	        g.drawRect(x, y, width, height);
-	    }
+	        int width = (int) (394 / (zoom));
+	        int height = (int) (475 / (zoom));
+	        g.drawRect(0-x, 0-y, width, height);
+		}
 		
 		public void setImage(ImageData image){
 			this.image = image;

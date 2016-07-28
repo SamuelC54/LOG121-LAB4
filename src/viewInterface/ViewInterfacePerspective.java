@@ -1,3 +1,22 @@
+/******************************************************
+Cours:   LOG121
+Session: E2016
+Groupe:  01
+Projet: Laboratoire #4
+Étudiant(e)s: 
+              Philippe Torres-Brisebois
+              Laurent Theroux-Bombardier
+              Samuel Croteau
+              Nelson Chao
+Professeur : Francis Cardinal
+Nom du fichier: ViewInterfacePerspective.java
+Date créé: 2016-07-27
+Date dern. modif. 2016-07-27
+*******************************************************
+Historique des modifications
+*******************************************************
+2016-07-27 Version initiale
+*******************************************************/
 package viewInterface;
 
 import java.awt.Point;
@@ -7,12 +26,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 import javax.swing.AbstractAction;
 
 import model.Perspective;
-import model.VisualTransformState;
 import model.commande.Close;
 import model.commande.GestionnaireCommande;
 import model.commande.Sauvegarder;
@@ -21,6 +38,7 @@ import model.commande.Undo;
 import model.commande.Zoom;
 import model.memento.GestionnaireSauvegarde;
 import presenter.PresenterPerspective;
+import view.ViewImage;
 import view.ViewPerspective;
 
 public class ViewInterfacePerspective implements PropertyChangeListener {
@@ -30,10 +48,14 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 	private GestionnaireCommande gestCmd = GestionnaireCommande.getInstance();
 	private Point mouseLocation = new Point();
 	private GestionnaireSauvegarde listActions = new GestionnaireSauvegarde();
+	private ViewImage viewImage;
+
 	// Methods
-	public ViewInterfacePerspective(ViewPerspective viewPerspective, PresenterPerspective presenterPerspective) {
+	public ViewInterfacePerspective(ViewPerspective viewPerspective, PresenterPerspective presenterPerspective,
+			ViewImage viewImage) {
 		this.viewPerspective = viewPerspective;
 		this.presenterPerspective = presenterPerspective;
+		this.viewImage = viewImage;
 
 		listActions.saveState(presenterPerspective.getPerspective().getVtState());
 		// register the controller as the listener of the model
@@ -45,6 +67,9 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 		presenterPerspective.setPerspective();
 	}
 
+	/**
+	 * Setup the view interaction
+	 */
 	private void setUpViewInteraction() {
 		viewPerspective.getbSave().setAction(new AbstractAction("Save") {
 			public void actionPerformed(ActionEvent arg0) {
@@ -60,7 +85,7 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 				presenterPerspective.setPerspective();
 				gestCmd.add(new Undo(presenterPerspective));
 				gestCmd.executeAll();
-				
+
 				viewPerspective.repaint();
 			}
 		});
@@ -79,12 +104,14 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 				gestCmd.executeAll();
 
 				viewPerspective.repaint();
+				viewImage.repaint();
 			}
 		});
 		viewPerspective.getImagePanel().addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				mouseLocation.setLocation(e.getX(), e.getY());
 			}
+
 			public void mouseReleased(MouseEvent e) {
 				listActions.saveState(presenterPerspective.getPerspective().getVtState());
 			}
@@ -97,10 +124,14 @@ public class ViewInterfacePerspective implements PropertyChangeListener {
 
 				mouseLocation.setLocation(event.getX(), event.getY());
 				viewPerspective.repaint();
+				viewImage.repaint();
 			}
 		});
 	}
 
+	/**
+	 * Detect and do action corresponding to the event
+	 */
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propName = evt.getPropertyName();
 		Object newVal = evt.getNewValue();
