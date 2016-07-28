@@ -1,6 +1,6 @@
 package model;
 
-public class VisualTransformState {
+public class VisualTransformState implements Cloneable{
 	//attributes
 	private int horizontalTranslation;
 	private int verticalTranslation;
@@ -8,6 +8,16 @@ public class VisualTransformState {
 	//Methods
 	public VisualTransformState(){
 		reset();
+	}
+
+	public VisualTransformState getCopy() {
+		try {
+			return (VisualTransformState) this.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	//getter/setter

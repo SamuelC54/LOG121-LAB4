@@ -62,7 +62,7 @@ public class PresenterPerspective{
 	}
 	
 	public void undoAction() {
-		//Undo action
+		setPerspective();
 	}
 	
 	public Perspective getPerspective() {

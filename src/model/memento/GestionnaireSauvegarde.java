@@ -8,7 +8,7 @@ import model.VisualTransformState;
 public class GestionnaireSauvegarde {
 
 	private List<VisualTransformState> imageSavedState = new ArrayList<VisualTransformState>();
-	private int cursor = -1;
+	private boolean removed = false;
 
 	/**
 	 * Save a memento state.
@@ -17,7 +17,19 @@ public class GestionnaireSauvegarde {
 	 *            the desired state to save.
 	 */
 	public void saveState(VisualTransformState state) {
-		imageSavedState.add(state);
+		VisualTransformState copyState = state.getCopy();
+		imageSavedState.add(copyState);
+		this.removed = false;
+		System.out.println("Added" + imageSavedState.size());
+	}
+
+	/**
+	 * Get the size of the saved elements
+	 * 
+	 * @return the number of saved element in the list
+	 */
+	public int size() {
+		return imageSavedState.size();
 	}
 
 	/**
@@ -27,26 +39,25 @@ public class GestionnaireSauvegarde {
 	 */
 	public VisualTransformState getCurrentState() {
 		if (!imageSavedState.isEmpty()) {
-			return imageSavedState.get(cursor+1);
+			return imageSavedState.get(imageSavedState.size() - 1);
 		}
 		return null;
 	}
 
 	public VisualTransformState getPreviousState() {
-		if (cursor > 0) {
-			cursor--;
+		System.out.println(imageSavedState.size());
+		if (!this.removed) {
+			imageSavedState.remove(imageSavedState.size() - 1);
+			this.removed = true;
 		}
-		
-		return imageSavedState.get(cursor);
-	}
-	
-	public VisualTransformState getNextState() {
-		if (cursor + 1 < imageSavedState.size()) {
-			cursor++;
+
+		if (imageSavedState.size() == 1) {
+			return imageSavedState.get(0);
 		}
-		return imageSavedState.get(cursor);
+
+		return imageSavedState.remove(imageSavedState.size() - 1);
 	}
-	
+
 	/**
 	 * Check to see if there are some saves.
 	 * 
